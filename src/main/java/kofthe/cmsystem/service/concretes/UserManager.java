@@ -29,7 +29,7 @@ public class UserManager implements UserService {
         try {
             if (validateSignUpMap(requestMap)) {
                 User user = userRepository.findByEmailId(requestMap.get("email"));
-                if (Objects.nonNull(user)) {
+                if (Objects.isNull(user)) {
                     userRepository.save(getUserFromMap(requestMap));
                     return CafeUtils.getResponseEntity("Success!", HttpStatus.OK);
                 }else {
