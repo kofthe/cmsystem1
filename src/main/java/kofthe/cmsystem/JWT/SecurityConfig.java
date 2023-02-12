@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
         return NoOpPasswordEncoder.getInstance();
     }
 
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return  http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 .and()
@@ -61,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfiguration {
                         throw new RuntimeException(e);
                     }
                 })
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .httpBasic(Customizer.withDefaults())
                 .build();
